@@ -7,9 +7,16 @@ import {
 } from "@/store/reducers/loadingReducer";
 import { useRedux } from "@/store/useRedux";
 
+interface LoadingInterface {
+  loading_count: number;
+  startLoading: () => void;
+  endLoading: () => void;
+  resetLoading: () => void;
+}
+
 // loading_count > 0 -> loading show
 // loading_count === 0 -> loading hidden
-const useLoading = () => {
+const useLoading = (): LoadingInterface => {
   const dispatch = useDispatch();
   const { state } = useRedux();
   const { loading_count } = state.loading;

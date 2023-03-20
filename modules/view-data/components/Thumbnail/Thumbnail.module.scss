@@ -4,6 +4,7 @@
   width: 200px;
   height: auto;
   object-fit: contain;
+  cursor: pointer;
 
   @include tabletQuery {
     width: 150px;

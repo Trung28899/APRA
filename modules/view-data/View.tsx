@@ -1,23 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import classes from "./View.module.scss";
 import Image from "next/image";
-
 import Table from "../common/components/Table/Table";
 import SearchIcon from "@/public/search.svg";
 import NavBar from "@/modules/common/components/NavBar/NavBar";
 import { useRedux } from "@/store/useRedux";
 import { logout } from "@/store/reducers/authReducer";
-import { PhotoData } from "@/modules/view-data/types/ViewDataTypes";
+import { PhotoData, PhotoRow } from "@/modules/view-data/types/ViewDataTypes";
 import Thumbnail from "./components/Thumbnail/Thumbnail";
 import useViewData from "./hooks/useViewData";
 import Input from "../common/components/Input/Input";
 import Button from "../common/components/Button/Button";
+import ClickableParagraph from "./components/Paragraph/ClickableParagraph";
+import useModal from "../common/hooks/useModal";
+import Modal from "../common/components/Modal/Modal";
+import ModalContainer from "./containers/ModalContainer";
 
 function View({ data }: { data: PhotoData[] }) {
   const { state, dispatch } = useRedux();
   const { authenticated } = state.authObject;
   const router = useRouter();
+  const [modalDetails, setModalDetails] = useState<PhotoData>();
+  const { modalOpen, openModal, closeModal } = useModal();
   const { photoData, onChangeInput, inputValue, onKeyDownInput, search } =
     useViewData(data);
 
@@ -44,16 +49,33 @@ function View({ data }: { data: PhotoData[] }) {
     if (!authenticated) router.push("/");
   }, [authenticated, router]);
 
-  const processData = photoData.map((dataObject) => {
+  const processData: PhotoRow[] = photoData.map((dataObject) => {
+    const setDetails = () => {
+      setModalDetails(dataObject);
+      openModal();
+    };
+
     return {
-      ...dataObject,
-      thumbnailImage: <Thumbnail source={dataObject.thumbnailUrl} />,
+      id: (
+        <ClickableParagraph onClick={setDetails}>
+          {dataObject.id}
+        </ClickableParagraph>
+      ),
+      title: (
+        <ClickableParagraph onClick={setDetails}>
+          {dataObject.title}
+        </ClickableParagraph>
+      ),
+      thumbnailImage: (
+        <Thumbnail source={dataObject.thumbnailUrl} onClick={setDetails} />
+      ),
     };
   });
 
   return (
     <div className={classes.container}>
       <NavBar options={navBarOptions} variant="black" />
+
       <div className={classes.inputContainer}>
         <Input
           placeholder="Search keywords on title"
@@ -72,6 +94,7 @@ function View({ data }: { data: PhotoData[] }) {
           <Image src={SearchIcon} alt="" />
         </Button>
       </div>
+
       <div className={classes.tableContainer}>
         <Table
           itemsPerPagePagination={5}
@@ -79,6 +102,14 @@ function View({ data }: { data: PhotoData[] }) {
           columnFields={columns}
         />
       </div>
+
+      <Modal
+        show={modalOpen}
+        closeModal={closeModal}
+        modalClassName={classes.modalContainer}
+      >
+        <ModalContainer data={modalDetails} closeModal={closeModal} />
+      </Modal>
     </div>
   );
 }

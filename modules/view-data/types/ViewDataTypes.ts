@@ -6,7 +6,12 @@ interface PhotoData {
   title: string;
   url: string;
   thumbnailUrl: string;
-  thumbnailImage?: ReactNode;
 }
 
-export type { PhotoData };
+interface PhotoRow {
+  id: ReactNode;
+  title: ReactNode;
+  thumbnailImage: ReactNode;
+}
+
+export type { PhotoData, PhotoRow };

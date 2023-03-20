@@ -28,4 +28,17 @@
       height: fit-content;
     }
   }
+
+  .modalContainer {
+    top: 40%;
+    transform: translate(0%, -50%);
+    height: fit-content;
+    width: fit-content;
+    min-width: 500px;
+
+    @include mobileQuery {
+      width: 95vw;
+      min-width: 0px;
+    }
+  }
 }

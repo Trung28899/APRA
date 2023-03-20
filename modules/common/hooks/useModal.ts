@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-const useModal = () => {
+interface ModalType {
+  modalOpen: boolean;
+  closeModal: () => void;
+  openModal: () => void;
+}
+
+const useModal = (): ModalType => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return {

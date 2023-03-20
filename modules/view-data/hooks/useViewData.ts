@@ -5,7 +5,15 @@ import { fetchPhotoBySearchTerms } from "../api/api";
 import useLoading from "@/modules/common/hooks/useLoading";
 import { toastError } from "@/modules/common/utils/toast_helper";
 
-const useViewData = (originalData: PhotoData[]) => {
+interface ViewDataType {
+  photoData: PhotoData[];
+  inputValue: string;
+  onKeyDownInput: (event: KeyboardEvent<HTMLInputElement>) => void;
+  onChangeInput: (event: ChangeEvent<HTMLInputElement>) => void;
+  search: () => void;
+}
+
+const useViewData = (originalData: PhotoData[]): ViewDataType => {
   const [photoData, setPhotoData] = useState<PhotoData[]>(originalData || []);
   const [searchKeywords, setSearchKeywords] = useState("");
   const [inputValue, setInputValue] = useState("");
