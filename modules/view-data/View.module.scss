@@ -1,0 +1,31 @@
+@import "@/styles/mixin.scss";
+
+.container {
+  @include pageContainer();
+
+  .tableContainer,
+  .inputContainer {
+    position: relative;
+    width: 90%;
+    margin: 0px auto;
+    margin-bottom: 100px;
+
+    @include tabletQuery {
+      overflow-x: scroll;
+    }
+  }
+
+  .inputContainer {
+    margin: 10px auto;
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0px 5px;
+
+    .buttonStyles {
+      padding: 9px 15px;
+      width: fit-content;
+      height: fit-content;
+    }
+  }
+}

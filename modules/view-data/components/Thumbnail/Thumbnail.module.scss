@@ -1,0 +1,11 @@
+@import "@/styles/mixin.scss";
+
+.thumbnail {
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+
+  @include tabletQuery {
+    width: 150px;
+  }
+}
