@@ -34,11 +34,10 @@ function FormContainers() {
       router.push("/view-data");
     } catch (error: any) {
       const errorMessage = error.response?.data?.errorDetails || "";
-      if (errorMessage) return toastError(errorMessage);
+      if (errorMessage) toastError(errorMessage);
       if (!errorMessage) toastError("An error has occured");
+      endLoading();
     }
-
-    return endLoading();
   }
 
   const formik = useFormik({

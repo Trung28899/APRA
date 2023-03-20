@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useState } from "react";
 import classes from "./View.module.scss";
 import Image from "next/image";
 import Table from "../common/components/Table/Table";
@@ -18,9 +17,7 @@ import Modal from "../common/components/Modal/Modal";
 import ModalContainer from "./containers/ModalContainer";
 
 function View({ data }: { data: PhotoData[] }) {
-  const { state, dispatch } = useRedux();
-  const { authenticated } = state.authObject;
-  const router = useRouter();
+  const { dispatch } = useRedux();
   const [modalDetails, setModalDetails] = useState<PhotoData>();
   const { modalOpen, openModal, closeModal } = useModal();
   const { photoData, onChangeInput, inputValue, onKeyDownInput, search } =
@@ -44,10 +41,6 @@ function View({ data }: { data: PhotoData[] }) {
       onClick: () => dispatch(logout()),
     },
   ];
-
-  useEffect(() => {
-    if (!authenticated) router.push("/");
-  }, [authenticated, router]);
 
   const processData: PhotoRow[] = photoData.map((dataObject) => {
     const setDetails = () => {
