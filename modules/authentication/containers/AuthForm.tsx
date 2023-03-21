@@ -53,6 +53,7 @@ function FormContainers() {
         id="username"
         error={errors.username}
         resetError={resetError}
+        data-testid="login-input-username"
         {...formik.getFieldProps("username")}
       />
       <Input
@@ -60,6 +61,7 @@ function FormContainers() {
         id="password"
         error={errors.password}
         resetError={resetError}
+        data-testid="login-input-password"
         {...formik.getFieldProps("password")}
       />
 
@@ -67,6 +69,7 @@ function FormContainers() {
         variant="blue"
         size="medium"
         type="submit"
+        data-testid="login-submit"
         className={classes.button}
       >
         Sign In

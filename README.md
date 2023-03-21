@@ -5,6 +5,6 @@
 - [x] UX: nav bar backdrop touch
 - [x] image lazy loading
 - [x] split view data into smaller container
-- [ ] Implement unit testing
+- [x] Implement unit testing
 - [x] Implement GraphQL
-- [ ] Review code quality and submit
+- [x] Review code quality and submit

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface PhotoData {
-  id: number;
+  id: number | string;
   title: string;
   thumbnailUrl: string;
 }

@@ -3,7 +3,7 @@ import classes from "./Auth.module.scss";
 import NavBar from "../common/components/NavBar/NavBar";
 import AuthForm from "./containers/AuthForm";
 
-function Auth() {
+const Auth: React.FC = () => {
   const navBarOptions = [
     {
       label: "Contact us",
@@ -29,6 +29,6 @@ function Auth() {
       <AuthForm />
     </div>
   );
-}
+};
 
 export default Auth;

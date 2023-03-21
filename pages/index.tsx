@@ -1,5 +1,7 @@
 import Auth from "@/modules/authentication/Auth";
 
-export default function Home() {
+const Home: React.FC = () => {
   return <Auth />;
-}
+};
+
+export default Home;
