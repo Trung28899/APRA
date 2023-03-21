@@ -6,5 +6,5 @@
 - [x] image lazy loading
 - [x] split view data into smaller container
 - [ ] Implement unit testing
-- [ ] Implement GraphQL
+- [x] Implement GraphQL
 - [ ] Review code quality and submit

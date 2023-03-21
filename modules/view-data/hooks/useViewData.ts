@@ -1,10 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, KeyboardEvent, ChangeEvent } from "react";
-import { PhotoData } from "@/modules/view-data/types/ViewDataTypes";
-import { fetchPhotoBySearchTerms } from "../api/api";
-import useLoading from "@/modules/common/hooks/useLoading";
-import { toastError } from "@/modules/common/utils/toast_helper";
+import {
+  useEffect,
+  useState,
+  KeyboardEvent,
+  ChangeEvent,
+  useMemo,
+} from "react";
 
+import { PhotoData } from "@/modules/view-data/types/ViewDataTypes";
+import useLoading from "@/modules/common/hooks/useLoading";
+import { useQuery } from "@apollo/client";
+import { FIND_PHOTO } from "../querries/photos";
+import { filterData } from "../utils/data_helpers";
 interface ViewDataType {
   photoData: PhotoData[];
   inputValue: string;
@@ -13,15 +20,23 @@ interface ViewDataType {
   search: () => void;
 }
 
+// Handling input events and side effects
 const useViewData = (originalData: PhotoData[]): ViewDataType => {
-  const [photoData, setPhotoData] = useState<PhotoData[]>(originalData || []);
   const [searchKeywords, setSearchKeywords] = useState("");
   const [inputValue, setInputValue] = useState("");
   const { startLoading, endLoading } = useLoading();
 
+  const queryVariable = useMemo(() => {
+    const limit = searchKeywords === "" ? 15 : 5000;
+    return {
+      variables: { searchTerm: searchKeywords, limit: limit },
+    };
+  }, [searchKeywords]);
+
+  const { loading, data } = useQuery(FIND_PHOTO, queryVariable);
+
   function search() {
     setSearchKeywords(inputValue);
-    if (inputValue === "") setPhotoData(originalData);
   }
 
   function onKeyDownInput(event: KeyboardEvent<HTMLInputElement>) {
@@ -30,27 +45,20 @@ const useViewData = (originalData: PhotoData[]): ViewDataType => {
 
   function onChangeInput(event: ChangeEvent<HTMLInputElement>) {
     setInputValue(event.target.value);
-    if (searchKeywords) setSearchKeywords("");
+    if (event.target.value === "") setSearchKeywords("");
   }
 
   useEffect(() => {
-    const searchBySearchTerm = async (keywords: string) => {
-      startLoading();
-      try {
-        const res = await fetchPhotoBySearchTerms(keywords);
-        setPhotoData(res.data);
-      } catch (error: any) {
-        if (error.message) toastError(error.message);
-        if (!error.message) toastError("An error has occured");
-      }
-      endLoading();
-    };
+    if (loading) startLoading();
+    if (!loading) endLoading();
+  }, [loading]);
 
-    if (searchKeywords) searchBySearchTerm(searchKeywords);
-  }, [searchKeywords, originalData, inputValue]);
+  const photoData = useMemo(() => {
+    return filterData(data?.photos?.data || originalData || [], searchKeywords);
+  }, [data, searchKeywords]);
 
   return {
-    photoData,
+    photoData: photoData,
     inputValue,
     onKeyDownInput,
     onChangeInput,

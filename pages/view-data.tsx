@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import DataView from "@/modules/view-data/View";
-import axios from "axios";
 import type { PhotoData } from "../modules/view-data/types/ViewDataTypes";
 import { toastError } from "@/modules/common/utils/toast_helper";
 import useLoading from "@/modules/common/hooks/useLoading";
@@ -9,7 +8,7 @@ import { useRedux } from "@/store/useRedux";
 import { useRouter } from "next/router";
 import { graphQLClient } from "../lib/graphql";
 import { GetStaticProps } from "next";
-import { POSTS_QUERY } from "@/queries/photos";
+import { PHOTOS_QUERY } from "@/modules/view-data/querries/photos";
 
 interface Props {
   data: PhotoData[];
@@ -42,7 +41,7 @@ function ViewDataRoute({ data, errorMessage }: Props) {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const res: DataReponse = await graphQLClient.request(POSTS_QUERY);
+    const res: DataReponse = await graphQLClient.request(PHOTOS_QUERY);
 
     return {
       props: {
