@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { PhotoData } from "../types/ViewDataTypes";
+import { PhotoData } from "../../types/ViewDataTypes";
 import classes from "./ModalContainer.module.scss";
 import CloseIcon from "@/public/close.svg";
 
