@@ -17,6 +17,7 @@ const Input = (props: Props) => {
     classes.input,
     classes[inputSize || "small"],
     classes[variant || "default"],
+    otherProps.className,
   ].join(" ");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

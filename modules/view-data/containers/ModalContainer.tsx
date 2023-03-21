@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { PhotoData } from "../types/ViewDataTypes";
 import classes from "./ModalContainer.module.scss";
@@ -29,6 +29,7 @@ function ImageModal({ data, closeModal }: Props) {
             width={100}
             height={100}
             className={classes.mainImage}
+            loading="lazy"
           />
         </div>
       }

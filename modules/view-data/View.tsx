@@ -76,6 +76,7 @@ function View({ data }: { data: PhotoData[] }) {
           onChange={onChangeInput}
           value={inputValue}
           onKeyDown={onKeyDownInput}
+          style={{ textAlign: "center" }}
         />
 
         <Button

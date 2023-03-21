@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import classes from "./Thumbnail.module.scss";
 
@@ -16,6 +16,7 @@ function Thumbnail({ source, onClick }: Props) {
       alt=""
       className={classes.thumbnail}
       onClick={onClick}
+      loading="lazy"
     />
   );
 }

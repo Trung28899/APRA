@@ -39,7 +39,7 @@ const HamburgerMenu = ({ options }: Props) => {
     <div className={classes.hamburgerMenu}>
       <HamburgerButton onClick={handleToggleMenu} showMenu={showMenu} />
 
-      <div className={backDropClasses} />
+      <div className={backDropClasses} onClick={handleToggleMenu} />
 
       <div className={`${classes.menu} ${showMenu && classes.showMenu}`}>
         {options.map((option, index) => (
