@@ -35,14 +35,14 @@
 }
 
 .modalContainer {
-  top: 40%;
+  top: 40% !important;
   transform: translate(0%, -50%);
-  height: fit-content;
-  width: fit-content;
+  height: fit-content !important;
+  width: fit-content !important;
   min-width: 500px;
 
   @include mobileQuery {
-    width: 95vw;
+    width: 95vw !important;
     min-width: 0px;
   }
 }

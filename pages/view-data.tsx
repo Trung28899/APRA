@@ -7,10 +7,19 @@ import { toastError } from "@/modules/common/utils/toast_helper";
 import useLoading from "@/modules/common/hooks/useLoading";
 import { useRedux } from "@/store/useRedux";
 import { useRouter } from "next/router";
+import { graphQLClient } from "../lib/graphql";
+import { GetStaticProps } from "next";
+import { POSTS_QUERY } from "@/queries/photos";
 
 interface Props {
   data: PhotoData[];
   errorMessage: string;
+}
+
+interface DataReponse {
+  photos: {
+    data: PhotoData[];
+  };
 }
 
 function ViewDataRoute({ data, errorMessage }: Props) {
@@ -31,14 +40,13 @@ function ViewDataRoute({ data, errorMessage }: Props) {
   return <DataView data={data} />;
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   try {
-    const res = await axios.get(
-      "http://jsonplaceholder.typicode.com/photos?_start=0&_limit=15"
-    );
+    const res: DataReponse = await graphQLClient.request(POSTS_QUERY);
+
     return {
       props: {
-        data: res.data,
+        data: res.photos.data,
         errorMessage: "",
       },
     };
@@ -46,12 +54,10 @@ export async function getStaticProps() {
     return {
       props: {
         data: [],
-        errorMessage: error.message
-          ? error.message
-          : "An error occurred while fetching data.",
+        errorMessage: "GraphQL Error",
       },
     };
   }
-}
+};
 
 export default ViewDataRoute;
