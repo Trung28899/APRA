@@ -45,7 +45,6 @@ const useViewData = (originalData: PhotoData[]): ViewDataType => {
 
   function onChangeInput(event: ChangeEvent<HTMLInputElement>) {
     setInputValue(event.target.value);
-    if (event.target.value === "") setSearchKeywords("");
   }
 
   useEffect(() => {
